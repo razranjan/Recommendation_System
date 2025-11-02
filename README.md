@@ -27,29 +27,37 @@ Deploying the end-to-end project with a user interface
 
 ```
 Recommendation_System/
+├── model.py                        # ML model class with sentiment & recommendation logic
 ├── app.py                          # Flask application backend
 ├── templates/
 │   └── index.html                  # Web interface (HTML)
 ├── requirements.txt                # Python dependencies
-├── Procfile                        # Heroku deployment configuration
-├── runtime.txt                     # Python version for Heroku
-├── Ebuss_Recommendation_System.ipynb  # Jupyter notebook with ML models
-├── sample30.csv                    # Dataset
-├── sentiment_model.pkl             # Trained sentiment analysis model
+├── Procfile                        # Deployment configuration
+├── runtime.txt                     # Python version specification
+├── Ebuss_Recommendation_System.ipynb  # Complete Jupyter notebook
+├── sample30.csv                    # Dataset (30,000 reviews)
+├── sentiment_model.pkl             # Trained Random Forest model
 ├── tfidf_vectorizer.pkl            # TF-IDF vectorizer
-├── recommendation_ratings.pkl      # Recommendation system ratings
-├── product_mapping.pkl             # Product ID to name mapping
-├── user_mapping.pkl                # User ID to username mapping
-└── model_config.pkl                # Model configuration
+├── recommendation_ratings.pkl      # Item-based recommendation matrix
+├── product_mapping.pkl             # Product metadata
+├── user_mapping.pkl                # User metadata
+└── model_config.pkl                # Configuration settings
 
 ```
 
 ## Features
 
-- **Sentiment Analysis**: Random Forest model with 94.33% accuracy
+- **Sentiment Analysis**: Random Forest model with 94.57% accuracy
 - **Recommendation System**: Item-based collaborative filtering
 - **User Interface**: Modern, responsive web interface
 - **Real-time Recommendations**: Get top 5 product recommendations based on user sentiment
+- **Live Deployment**: Successfully deployed on Railway
+
+## 🌐 Live Demo
+
+**Deployed Application**: [https://ebuss-recommendation.up.railway.app/](https://ebuss-recommendation.up.railway.app/)
+
+Try it out with usernames like: `joshua`, `dorothy w`, `rebecca`
 
 ## Local Deployment
 
@@ -128,6 +136,13 @@ git push origin main
    - Start Command: `gunicorn app:app`
    - Build Command: `pip install -r requirements.txt`
 
+5. **Customize Your Domain Name:**
+   - Go to the **Settings** tab in your Railway project
+   - Under **Service Name**, rename your service (e.g., `ebuss-recommendation`)
+   - Railway will generate a new domain based on the service name
+   - For a custom subdomain like `ebuss_recommendation.railway.app`, ensure the service name matches (Railway converts underscores to hyphens in domains)
+   - Your new URL will be available immediately after the name change
+
 That's it! Your app is live!
 
 #### Railway Benefits
@@ -138,48 +153,7 @@ That's it! Your app is live!
 - ✅ No payment verification required
 - ✅ Simple deployment process
 
-### Option 2: Heroku Deployment
 
-**Note:** Heroku now requires payment verification. If you have a verified account:
-
-#### Prerequisites
-
-- Heroku account with verified payment method
-- Heroku CLI installed
-- Git repository initialized
-
-#### Deployment Steps
-
-1. Login to Heroku:
-```bash
-heroku login
-```
-
-2. Create a Heroku app:
-```bash
-heroku create your-app-name
-```
-
-3. Push to Heroku:
-```bash
-git add .
-git commit -m "Initial deployment"
-git push heroku main
-```
-
-4. Open your deployed app:
-```bash
-heroku open
-```
-
-#### Important Notes
-
-- The app will automatically download NLTK data on first run
-- Ensure all pickle files are included in the deployment
-- The app uses gunicorn as the production server
-- Heroku will automatically detect Python version from runtime.txt
-
-### Option 3: Render Deployment
 
 Render offers free hosting as well:
 
@@ -209,7 +183,7 @@ Render offers free hosting as well:
 
 ## Model Performance
 
-- **Best Sentiment Model**: Random Forest (94.33% accuracy)
+- **Best Sentiment Model**: Random Forest (94.57% accuracy)
 - **Best Recommendation Model**: Item-Based (RMSE: 2.30)
 - **Total Products**: 271
 - **Total Users**: 24,908
