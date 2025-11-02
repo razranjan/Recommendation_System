@@ -55,7 +55,7 @@ Recommendation_System/
 
 ### Prerequisites
 
-- Python 3.9+
+- Python 3.10+ (required for newer library versions)
 - pip package manager
 
 ### Installation
@@ -66,30 +66,89 @@ git clone <repository-url>
 cd Recommendation_System
 ```
 
-2. Install dependencies:
+2. Create a virtual environment:
+```bash
+python3 -m venv .venv
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+```
+
+3. Install dependencies:
 ```bash
 pip install -r requirements.txt
 ```
 
-3. Run the application:
+4. Run the application:
 ```bash
 python app.py
 ```
 
-4. Open your browser and navigate to:
+5. Open your browser and navigate to:
 ```
 http://localhost:5000
 ```
 
-## Heroku Deployment
+### Note on Library Compatibility
 
-### Prerequisites
+The pickle files were created with specific library versions. If you encounter compatibility errors, ensure you're using Python 3.10+ with the exact versions specified in `requirements.txt`.
 
-- Heroku account (sign up at https://www.heroku.com)
+## Deployment Options
+
+### Option 1: Railway Deployment (Recommended - Free & Easy)
+
+Railway is the easiest platform for deploying this application.
+
+#### Prerequisites
+
+- Railway account (sign up at https://railway.app - free tier available)
+- GitHub repository with your code
+- Git repository initialized
+
+#### Deployment Steps
+
+1. **Push to GitHub:**
+```bash
+git add .
+git commit -m "Deploy Flask recommendation system"
+git push origin main
+```
+
+2. **Deploy to Railway:**
+   - Go to Railway dashboard: https://railway.app
+   - Click "New Project"
+   - Select "Deploy from GitHub repo"
+   - Connect your GitHub account
+   - Select your repository
+
+3. **Configure Settings:**
+   - Railway auto-detects Flask apps
+   - No additional configuration needed for most cases
+   - Your app will be available at `https://your-app.railway.app`
+
+4. **Start Command (if needed):**
+   - Start Command: `gunicorn app:app`
+   - Build Command: `pip install -r requirements.txt`
+
+That's it! Your app is live!
+
+#### Railway Benefits
+
+- ✅ Free tier available
+- ✅ Automatic HTTPS
+- ✅ Easy GitHub integration
+- ✅ No payment verification required
+- ✅ Simple deployment process
+
+### Option 2: Heroku Deployment
+
+**Note:** Heroku now requires payment verification. If you have a verified account:
+
+#### Prerequisites
+
+- Heroku account with verified payment method
 - Heroku CLI installed
 - Git repository initialized
 
-### Deployment Steps
+#### Deployment Steps
 
 1. Login to Heroku:
 ```bash
@@ -113,12 +172,30 @@ git push heroku main
 heroku open
 ```
 
-### Important Notes
+#### Important Notes
 
 - The app will automatically download NLTK data on first run
 - Ensure all pickle files are included in the deployment
 - The app uses gunicorn as the production server
 - Heroku will automatically detect Python version from runtime.txt
+
+### Option 3: Render Deployment
+
+Render offers free hosting as well:
+
+1. Sign up at https://render.com
+2. Create new Web Service
+3. Connect GitHub repository
+4. Configure:
+   - Build Command: `pip install -r requirements.txt`
+   - Start Command: `gunicorn app:app`
+
+### Deployment General Notes
+
+- The app will automatically download NLTK data on first run
+- Ensure all pickle files are included in deployment
+- The app uses gunicorn as the production server
+- Python 3.10+ is required for compatibility
 
 ## Usage
 
@@ -140,8 +217,32 @@ heroku open
 
 ## Technology Stack
 
-- **Backend**: Flask, Python
-- **Machine Learning**: scikit-learn, XGBoost, NLTK
-- **Data Processing**: pandas, numpy
-- **Deployment**: Heroku, Gunicorn
-- **Frontend**: HTML, CSS, JavaScript
+- **Backend**: Flask 2.1.2, Python 3.10+
+- **Machine Learning**: scikit-learn 1.6.1, XGBoost 3.1.1, NLTK 3.7
+- **Data Processing**: pandas 2.2.2, numpy 2.0.2
+- **Deployment**: Railway (Recommended), Heroku, Render, Gunicorn
+- **Frontend**: HTML5, CSS3, JavaScript (Vanilla)
+
+## Library Versions
+
+For compatibility with the trained pickle files, use these exact versions:
+
+- Python: 3.10+
+- Flask: 2.1.2
+- pandas: 2.2.2
+- numpy: 2.0.2
+- scikit-learn: 1.6.1
+- XGBoost: 3.1.1
+- NLTK: 3.7
+- scipy: >=1.11.0
+- joblib: >=1.3.0
+
+See `requirements.txt` for the complete list.
+
+## Troubleshooting
+
+### Pickle Compatibility Errors
+
+If you encounter errors like "No module named 'numpy._core'", this means your library versions don't match the training environment. 
+
+**Solution:** Ensure you have Python 3.10+ and install from `requirements.txt`.
